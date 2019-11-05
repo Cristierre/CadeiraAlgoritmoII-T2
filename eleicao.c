@@ -1,7 +1,8 @@
 #include<stdio.h>
+
 struct candidato{
 	int numeroCandidato;
-	char nome[6];
+	char nome[7];
 	char partido[3];
 	char cargo[1];
 	int numVotos;
@@ -14,6 +15,7 @@ struct candidato{
 
 
 int main(){
+
 	lista[0].numeroCandidato = 10;
 	strcpy(lista[0].nome, "Jorge");
 	strcpy(lista[0].partido, "ABC");
@@ -103,11 +105,12 @@ int menu(){
 	switch(opc){
         case 1:
             votacao();
-        break;
+            break;
+        case 2:
+            listaDeCandidatos();
+            break;
 	}
-	for(i = 0; i < 11; i++){
-        printf("Nome: %s,\n Numero de Votos: %d\n\n",lista[i].nome, lista[i].numVotos);
-    }
+
 }
 
 int votacao(){
@@ -167,6 +170,39 @@ int votacao(){
             }
         }else{
             printf(" Voce deve votar em um deputado!");
+        }
+    }
+    return 0;
+}
+
+int listaDeCandidatos (){
+    int i;
+    int escolha = 0;
+    printf("1- Lista de Presidenciaveis");
+    printf("2- Lista de Deputados");
+    printf("0 - Sair");
+    scanf("%d",&escolha);
+    if(escolha == 1){
+        printf("------- PRESIDENCIAVEIS ------- \n");
+        printf("N candidato      Nome      Partido      Cargo \n\n");
+
+
+        for(i = 0; i < 11; i++){
+           if(strcmp(lista[i].cargo,"P")==0){
+                printf("   %d        %s         %s         %s \n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
+           }
+        }
+         printf("0 - Sair");
+        scanf("%d",&escolha);
+    }else{
+        if(escolha == 2){
+            printf("------- DEPUTADOS ------- \n");
+            printf("N candidato      Nome      Partido      Cargo \n\n");
+            for(i = 0; i < 11; i++){
+                if(strcmp(lista[i].cargo, "D") == 0){
+                    printf("   %d        %s         %s         %s \n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
+                }
+            }
         }
     }
 

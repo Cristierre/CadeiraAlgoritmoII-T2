@@ -109,6 +109,9 @@ int menu(){
         case 2:
             listaDeCandidatos();
             break;
+        case 3:
+            totalVotosCandidato();
+            break;
 	}
 
 }
@@ -150,7 +153,7 @@ int votacao(){
         }else{
             printf("Voce deve votar em um presidente! \n \n");
         }
-        if(presidenteEscolhido.numeroCandidato != 0){
+        if(deputadoEscolhido.numeroCandidato != 0){
             printf("--- PARA DEPUTADO --- \n \n");
             printf("Nome: %s \n\n", deputadoEscolhido.nome);
             printf("Partido: %s \n\n", deputadoEscolhido.partido);
@@ -160,10 +163,12 @@ int votacao(){
 
             if(confirma == 1){
                 for(i = 0; i < 11; i++){
-                    if(lista[i].numeroCandidato == paraPresidente){
-                        lista[i].numVotos += 1;
-                    }
                     if(lista[i].numeroCandidato == paraDeputado){
+
+                        lista[i].numVotos += 1;
+
+                    }
+                    if(lista[i].numeroCandidato == paraPresidente){
                         lista[i].numVotos += 1;
                     }
                 }
@@ -172,6 +177,8 @@ int votacao(){
             printf(" Voce deve votar em um deputado!");
         }
     }
+    system("cls");
+    menu();
     return 0;
 }
 
@@ -187,7 +194,6 @@ int listaDeCandidatos (){
     if(escolha == 1){
         printf("------- PRESIDENCIAVEIS ------- \n\n");
         printf("N candidato      Nome      Partido      Cargo \n\n");
-
 
         for(i = 0; i < 11; i++){
            if(strcmp(lista[i].cargo,"P")==0){
@@ -209,9 +215,34 @@ int listaDeCandidatos (){
             menu();
         }
     }
+    return 0;
+}
+int totalVotosCandidato(){
+    int i;
+    int j;
+    int x;
+    int escolha;
+    struct candidato maiorNumVoto = lista[0];
+    struct candidato listagemVotos[11];
 
+        for(i = 1; i < 11; i++){
+            while(lista[i].numVotos > maiorNumVoto.numVotos){
+                listagemVotos[i] = maiorNumVoto;
+                listagemVotos[i-1] = lista[i];
+                maiorNumVoto = lista[i];
+            }
+        }
+        for(i = 0; i < 11; i++){
+            printf("   %d        %s         %s         %s      %d \n", listagemVotos[i].numeroCandidato, listagemVotos[i].nome, listagemVotos[i].partido, listagemVotos[i].cargo, listagemVotos[i].numVotos);
+        }
+        printf("0 - Sair");
+        scanf("%d",&escolha);
+        if(escolha != 0){
+            system("cls");
+            printf("digite 0 para sair! \n");
+        }
 
-
+    menu();
     return 0;
 }
 

@@ -178,12 +178,14 @@ int votacao(){
 int listaDeCandidatos (){
     int i;
     int escolha = 0;
-    printf("1- Lista de Presidenciaveis");
-    printf("2- Lista de Deputados");
-    printf("0 - Sair");
+    printf("1- Lista de Presidenciaveis \n");
+    printf("2- Lista de Deputados \n \n");
+    printf("0 - Sair \n");
+    printf("Digite a opcao desejada:");
     scanf("%d",&escolha);
+    system("cls");
     if(escolha == 1){
-        printf("------- PRESIDENCIAVEIS ------- \n");
+        printf("------- PRESIDENCIAVEIS ------- \n\n");
         printf("N candidato      Nome      Partido      Cargo \n\n");
 
 
@@ -203,6 +205,8 @@ int listaDeCandidatos (){
                     printf("   %d        %s         %s         %s \n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
                 }
             }
+        }else{
+            menu();
         }
     }
 

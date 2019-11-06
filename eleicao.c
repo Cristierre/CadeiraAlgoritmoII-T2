@@ -162,6 +162,7 @@ int votacao(){
             scanf("%d", &confirma);
 
             if(confirma == 1){
+                    printf("\a");
                 for(i = 0; i < 11; i++){
                     if(lista[i].numeroCandidato == paraDeputado){
 
@@ -193,11 +194,11 @@ int listaDeCandidatos (){
     system("cls");
     if(escolha == 1){
         printf("------- PRESIDENCIAVEIS ------- \n\n");
-        printf("N candidato      Nome      Partido      Cargo \n\n");
+        printf("   N candidato          Nome           Partido         Cargo \n\n");
 
         for(i = 0; i < 11; i++){
            if(strcmp(lista[i].cargo,"P")==0){
-                printf("   %d        %s         %s         %s \n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
+               printf("\v\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\v\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
            }
         }
          printf("0 - Sair");
@@ -205,10 +206,11 @@ int listaDeCandidatos (){
     }else{
         if(escolha == 2){
             printf("------- DEPUTADOS ------- \n");
-            printf("N candidato      Nome      Partido      Cargo \n\n");
+            printf("   N candidato          Nome           Partido         Cargo \n\n");
+
             for(i = 0; i < 11; i++){
                 if(strcmp(lista[i].cargo, "D") == 0){
-                    printf("   %d        %s         %s         %s \n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
+                   printf("\v\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\v\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
                 }
             }
         }else{
@@ -220,20 +222,23 @@ int listaDeCandidatos (){
 int totalVotosCandidato(){
     int i;
     int j;
-    int x;
+    struct candidato aux;
     int escolha;
-    struct candidato maiorNumVoto = lista[0];
-    struct candidato listagemVotos[11];
 
-        for(i = 1; i < 11; i++){
-            while(lista[i].numVotos > maiorNumVoto.numVotos){
-                listagemVotos[i] = maiorNumVoto;
-                listagemVotos[i-1] = lista[i];
-                maiorNumVoto = lista[i];
+
+        for(i = 0; i < 11; i++){
+            for(j = 0; j < 11; j++){
+                if( lista[j].numVotos < lista[j+1].numVotos ){
+                    aux = lista[j];
+                    lista[j] = lista[j+1];
+                    lista[j+1] = aux;
+                }
             }
         }
+             printf("   N candidato          Nome           Partido         Cargo         Numero de Votos\n\n");
         for(i = 0; i < 11; i++){
-            printf("   %d        %s         %s         %s      %d \n", listagemVotos[i].numeroCandidato, listagemVotos[i].nome, listagemVotos[i].partido, listagemVotos[i].cargo, listagemVotos[i].numVotos);
+            printf("\v\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\v\t%d\t\v\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);
+
         }
         printf("0 - Sair");
         scanf("%d",&escolha);

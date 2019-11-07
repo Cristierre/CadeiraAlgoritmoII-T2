@@ -6,6 +6,7 @@ struct candidato{
 	char partido[3];
 	char cargo[1];
 	int numVotos;
+	float porcentagemVotos;
 };
 
 
@@ -112,6 +113,9 @@ int menu(){
         case 3:
             totalVotosCandidato();
             break;
+        case 4:
+            apuraPercentualVotos();
+            break;
 	}
 
 }
@@ -138,10 +142,10 @@ int votacao(){
         system("cls");
 
         for(i = 0; i < 11; i++){
-            if(lista[i].numeroCandidato == paraPresidente){
+            if(lista[i].numeroCandidato == paraPresidente && lista[i].numeroCandidato < 100){
                 presidenteEscolhido = lista[i];
             }
-            if(lista[i].numeroCandidato == paraDeputado){
+            if(lista[i].numeroCandidato == paraDeputado && lista[i].numeroCandidato > 1000){
                 deputadoEscolhido = lista[i];
             }
         }
@@ -149,9 +153,10 @@ int votacao(){
             printf("--- PARA PRESIDENTE --- \n \n");
             printf("Nome: %s \n\n", presidenteEscolhido.nome);
             printf("Partido: %s \n\n", presidenteEscolhido.partido);
+            printf("Cargo: %s \n\n", presidenteEscolhido.cargo);
 
         }else{
-            printf("Voce deve votar em um presidente! \n \n");
+            printf("\n Voce deve votar em um presidente! \n \n");
         }
         if(deputadoEscolhido.numeroCandidato != 0){
             printf("--- PARA DEPUTADO --- \n \n");
@@ -175,7 +180,7 @@ int votacao(){
                 }
             }
         }else{
-            printf(" Voce deve votar em um deputado!");
+            printf(" \n Voce deve votar em um deputado! \n\n");
         }
     }
     system("cls");
@@ -249,6 +254,39 @@ int totalVotosCandidato(){
 
     menu();
     return 0;
+}
+
+int apuraPercentualVotos(){
+    int i;
+    float porcentagem;
+    int totalVotantes = 0;
+    int sair = 1;
+    for(i = 0 ; i < 11 ; i ++){
+        totalVotantes += lista[i].numVotos;
+    }
+    for(i = 0 ; i < 11 ; i ++){
+        lista[i].porcentagemVotos = (lista[i].numVotos * 100)/totalVotantes;
+        printf("votos: %.2f \n", lista[i].porcentagemVotos);
+    }
+    system("pause");
+
+    system("pause");
+    printf("----------- PRESIDENCIAVEIS ----------\n\n");
+    for(i = 0 ; i < 11 ; i ++){
+         printf("\v\t%s\t\v\t%s\t\v\t%s\t\v\t%d%%\t\v\n",lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].porcentagemVotos);
+
+    }
+    while(sair != 0 ){
+        printf("\n 0 - Sair \n ");
+        scanf("%d", &sair);
+        if(sair == 0){
+            system("cls");
+            menu();
+        }else{
+            printf("Digite 0 para retornar ao menu");
+        }
+
+    }
 }
 
 

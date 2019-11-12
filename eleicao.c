@@ -95,7 +95,7 @@ int menu(){
 	printf("1- Votar \n");
 	printf("2- Lista de Candidatos Por Cargo \n");
 	printf("3- Total de Votos Por Candidato \n");
-	printf("4- Apuracao Percentual de Votos");
+	printf("4- Apuracao Percentual de Votos \n");
 	printf("5- Quantidade Eleitos Por Partido Politico \n");
 	printf("6- Sair \n \n");
 
@@ -116,6 +116,7 @@ int menu(){
         case 4:
             apuraPercentualVotos();
             break;
+        	
 	}
 
 }
@@ -201,35 +202,32 @@ int listaDeCandidatos (){
     system("cls");
     
     if(escolha == 1){
-        printf("------- PRESIDENCIAVEIS ------- \n\n");
-        printf("   N candidato          Nome           Partido         Cargo \n\n");
-
-        for(i = 0; i < 11; i++){
-           if(strcmp(lista[i].cargo,"P")==0){
-               printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
-           }
-        }
-        sair();
+        printf("                    ------- PRESIDENCIAVEIS ------- \n\n");        
+        listaCandidatosPorCargo("P");
+        
     }else{
         if(escolha == 2){
-            printf("------- DEPUTADOS ------- \n");
-            printf("   N candidato          Nome           Partido         Cargo \n\n");
-
-            for(i = 0; i < 11; i++){
-                if(strcmp(lista[i].cargo, "D") == 0){
-                   printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
-                }
-            }
+            printf("                 ------- DEPUTADOS ------- \n");
+            listaCandidatosPorCargo("D");
         }
-        sair();
     }
+    sair();
     return 0;
+}
+
+int listaCandidatosPorCargo(char *cargoCand){
+	int i;
+	printf("   N candidato          Nome           Partido         Cargo \n\n");
+	for(i = 0; i < 11; i++){
+    	if(strcmp(lista[i].cargo,cargoCand)==0){
+            printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
+	   	}
+    }
 }
 int totalVotosCandidato(){
     int i;
     int j;
     struct candidato aux;
-    int escolha;
 
 
         for(i = 0; i < 11; i++){
@@ -251,32 +249,65 @@ int totalVotosCandidato(){
     return 0;
 }
 
+int apuraPercentualPorCargo(char *cargoCand){
+	int i;
+	int totalVotantes = 0;
+	printf("        Nome           Partido         Cargo         %%Votos\n\n");
+	
+	for(i = 0 ; i < 11 ; i ++){
+		if(strcmp(lista[i].cargo, cargoCand)==0){
+			totalVotantes += lista[i].numVotos;
+		}
+	}	
+	for(i = 0 ; i < 11 ; i ++){
+        if(strcmp(lista[i].cargo, cargoCand)==0){            	
+            lista[i].porcentagemVotos = (lista[i].numVotos * 100)/totalVotantes;
+        }
+    }
+    ordenaPorPercentualDeVotos();
+    for(i = 0 ; i < 11 ; i ++){
+        if(strcmp(lista[i].cargo, cargoCand)==0){            	
+           printf("\t%s\t\v\t%s\t\v\t%s\t\v\t%.2f\t\n",lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].porcentagemVotos);
+        }
+    }
+    
+    
+	return 0;
+}
+
+int ordenaPorPercentualDeVotos(){	
+	int i;
+    int j;
+    struct candidato aux;
+
+        for(i = 0; i < 11; i++){
+            for(j = 0; j < 11; j++){
+                if( lista[j].porcentagemVotos < lista[j+1].porcentagemVotos ){
+                    aux = lista[j];
+                    lista[j] = lista[j+1];
+                    lista[j+1] = aux;
+                }
+            }
+        }
+	
+	return 0;
+}
+
 int apuraPercentualVotos(){
     int i;
-    float porcentagem;
+    float porcentagem;   
     int totalVotantes = 0;
     
     for(i = 0 ; i < 11 ; i ++){
-        totalVotantes += lista[i].numVotos;
-    }
+    	totalVotantes += lista[i].numVotos;
+	}
+    
     if(totalVotantes > 0){
-        printf("---------- PRESIDENCIAVEIS ----------\n\n");
-        printf("        Nome           Partido         Cargo         %%Votos\n\n");
-        for(i = 0 ; i < 11 ; i ++){
-            if(strcmp(lista[i].cargo, "P")==0){
-                lista[i].porcentagemVotos = (lista[i].numVotos * 100)/totalVotantes;
-                printf("\t%s\t\v\t%s\t\v\t%s\t\v\t%.2f\t\n",lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].porcentagemVotos);
-            }
-        }
+        printf("                     ---------- PRESIDENCIAVEIS ----------\n\n");
+        apuraPercentualPorCargo("P");      
         
-        printf("---------- DEPUTADOS ----------\n\n");
-         printf("        Nome           Partido         Cargo         %%Votos\n\n");
-        for(i = 0 ; i < 11 ; i ++){
-            if(strcmp(lista[i].cargo, "D")==0){
-                lista[i].porcentagemVotos = (lista[i].numVotos * 100)/totalVotantes;
-                printf("\t%s\t\v\t%s\t\v\t%s\t\v\t%.2f\t\n",lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].porcentagemVotos);
-            }
-        }
+        printf("\n \n                 ---------- DEPUTADOS ----------\n\n");
+        apuraPercentualPorCargo("D");      
 
     }else{
     	printf("As eleicoes ainda nao iniciaram!");

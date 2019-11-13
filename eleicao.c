@@ -351,16 +351,17 @@ int quantidadeEleitosPorPartido(){
             }
         }
 	}
-
-	for(i = 0 ; i < 3 ; i ++){
-            printf("%s ", eleitos[0].partido);// imprime calor do cargo juntamente com o do partido
-		if(strcmp(eleitos[i].partido, "ABC")==0){
+    char aux[4];
+	for(i = 0 ; i < 2 ; i ++){
+        memcpy(&aux,eleitos[i].partido,3);
+        printf("%s \n", aux);// imprime calor do cargo juntamente com o do partido
+		if(strcmp(&aux, "ABC")==0){
 			abc ++;
 		}else{
-			if(strcmp(eleitos[i].partido, "XYZ")==0){
+			if(strcmp(&aux, "XYZ")==0){
 				xyz++;
 			}else{
-				if(strcmp(eleitos[i].partido, "DEF")==0){
+				if(strcmp(&aux, "DEF")==0){
 					def++;
 				}
 			}

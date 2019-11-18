@@ -12,6 +12,11 @@ struct candidato{
 	struct candidato lista[11];
 	float numVotos;
 	
+	//Features:
+	// 1. total de votos candidatos deve ser apresentada separadamente por cargos
+	// 2. para ser eleito deve ter no mínimo 1 voto
+	// 3. corrigir bugs causados pela opção sair 
+	
 int main(){
 
 	lista[0].numeroCandidato = 10;

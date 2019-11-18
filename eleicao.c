@@ -3,18 +3,15 @@
 struct candidato{
 	int numeroCandidato;
 	char nome[7];
-	char partido[3];
-	char cargo[1];
+	char partido[4];
+	char cargo[2];
 	int numVotos;
 	float porcentagemVotos;
 };
 
-
 	struct candidato lista[11];
 	float numVotos;
-
-
-
+	
 int main(){
 
 	lista[0].numeroCandidato = 10;
@@ -84,43 +81,48 @@ int main(){
 	lista[10].numVotos = 0;
 
 	menu();
-
 }
 
 int menu(){
 	int opc;
 	int i;
-
-	printf("----------------- ELEICOES ----------------- \n\n");
-	printf("1- Votar \n");
-	printf("2- Lista de Candidatos Por Cargo \n");
-	printf("3- Total de Votos Por Candidato \n");
-	printf("4- Apuracao Percentual de Votos \n");
-	printf("5- Quantidade Eleitos Por Partido Politico \n");
-	printf("6- Sair \n \n");
-
-	printf("Digite a opcao desejada: ");
-	scanf("%d",&opc);
-	system("cls");
-
-	switch(opc){
-        case 1:
-            votacao();
-            break;
-        case 2:
-            listaDeCandidatos();
-            break;
-        case 3:
-            totalVotosCandidato();
-            break;
-        case 4:
-            apuraPercentualVotos();
-            break;
-
-        case 5:
-        	quantidadeEleitosPorPartido();
-        	break;
-
+	
+	while(opc < 1 || opc > 6){
+		printf("----------------- ELEICOES ----------------- \n\n");
+		printf("1- Votar \n");
+		printf("2- Lista de Candidatos Por Cargo \n");
+		printf("3- Total de Votos Por Candidato \n");
+		printf("4- Apuracao Percentual de Votos \n");
+		printf("5- Quantidade Eleitos Por Partido Politico \n");
+		printf("6- Sair \n \n");
+	
+		printf("Digite a opcao desejada: ");
+		scanf("%d",&opc);
+		system("cls");
+	
+		switch(opc){
+	        case 1:
+	            votacao();
+	            break;
+	        case 2:
+	            listaDeCandidatos();
+	            break;
+	        case 3:
+	            totalVotosCandidato();
+	            break;
+	        case 4:
+	            apuraPercentualVotos();
+	            break;
+	
+	        case 5:
+	        	quantidadeEleitosPorPartido();
+	        	break;
+	        
+	        default:
+	        	system("cls");
+	        	printf("Opcao invalida!!! \n");
+	        	break; 	
+		}
 	}
 
 }
@@ -167,6 +169,7 @@ int votacao(){
             printf("--- PARA DEPUTADO --- \n \n");
             printf("Nome: %s \n\n", deputadoEscolhido.nome);
             printf("Partido: %s \n\n", deputadoEscolhido.partido);
+            printf("Cargo: %s \n\n", deputadoEscolhido.partido);
 
             printf("1 - CONFIRMA    0- CANCELA :");
             scanf("%d", &confirma);
@@ -236,8 +239,7 @@ int totalVotosCandidato(){
             printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%s\t\v\t%d\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);
 
         }
-        sair();
-
+    sair();
     return 0;
 }
 
@@ -262,8 +264,6 @@ int apuraPercentualPorCargo(char *cargoCand){
            printf("\t%s\t\v\t%s\t\v\t%s\t\v\t%.2f\t\n",lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].porcentagemVotos);
         }
     }
-
-
 	return 0;
 }
 int ordenaPorVotos (){
@@ -320,7 +320,6 @@ int apuraPercentualVotos(){
     }else{
     	printf("As eleicoes ainda nao iniciaram!");
 	}
-
     sair();
 }
 
@@ -330,38 +329,37 @@ int quantidadeEleitosPorPartido(){
 	int def = 0;
 	int i;
 	int presidenteEleito = 0;
-	int deputadosEleitos = 0;
+	int deputadosEleitos = 1;
 	int numDeputadosEleitos = 0;
     struct candidato presidente;
     struct candidato deputados[1];
     struct candidato eleitos[2];
 
-
 	ordenaPorVotos();
 
 	for(i = 0 ; i < 11 ; i ++){
         if(strcmp(lista[i].cargo,"P") == 0 && presidenteEleito == 0){
+        	printf("entrou presidente \n");
             eleitos[presidenteEleito] = lista[i];
             presidenteEleito = 1;
         }else{
-            if(strcmp(lista[i].cargo,"D") == 0  && deputadosEleitos <= 1 ){
-                eleitos[deputadosEleitos] = lista[i];
+            if(strcmp(lista[i].cargo,"D") == 0  && deputadosEleitos <= 2 ){
+                eleitos[deputadosEleitos] = lista[i];                
                 deputadosEleitos ++;
-
             }
         }
 	}
-    char aux[4];
-	for(i = 0 ; i < 2 ; i ++){
-        memcpy(&aux,eleitos[i].partido,3);
-        printf("%s \n", aux);// imprime calor do cargo juntamente com o do partido
-		if(strcmp(&aux, "ABC")==0){
+	
+	for(i = 0 ; i < 3 ; i ++){     
+			printf("%d \n\n\n",i);
+        	printf("nome: %s \n partido: %s \n\n", eleitos[i].nome, eleitos[i].partido);
+		if(strcmp(eleitos[i].partido, "ABC")==0){
 			abc ++;
 		}else{
-			if(strcmp(&aux, "XYZ")==0){
+			if(strcmp(eleitos[i].partido, "XYZ")==0){
 				xyz++;
 			}else{
-				if(strcmp(&aux, "DEF")==0){
+				if(strcmp(eleitos[i].partido, "DEF")==0){
 					def++;
 				}
 			}
@@ -389,7 +387,6 @@ int sair(){
         }else{
             printf("Digite 0 para retornar ao menu");
         }
-
     }
     return 0;
 }

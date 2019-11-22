@@ -12,10 +12,7 @@ struct candidato{
 	struct candidato lista[11];
 	float numVotos;
 
-	//Features:
-	// 1. total de votos candidatos deve ser apresentada separadamente por cargos
-	// 2. para ser eleito deve ter no mínimo 1 voto
-	// 3. corrigir bugs causados pela opção sair
+	// Nome: Cristierre Gomes Konrath
 
 int main(){
 
@@ -125,7 +122,11 @@ int menu(){
 
 	        default:
 	        	system("cls");
-	        	printf("Opcao invalida!!! \n");
+	        	if(opc != 6){
+                    printf("Opcao invalida!!! \n");
+	        	}else{
+                    printf("final das eleicoes!");
+	        	}
 	        	break;
 		}
 	}
@@ -245,7 +246,7 @@ int listaCandidatosPorCargo(char *cargoCand){
 	            printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%c\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo);
 		   	}
 	    }
-     	printf("\n 0 - Sair \n ");
+     	printf("\n 0 - Sair: ");
         scanf("%d", &sair);
         	if(sair == 0){
         	    system("cls");
@@ -346,7 +347,6 @@ int ordenaPorPercentualDeVotos(){
 
 int apuraPercentualVotos(){
     int i;
-    float porcentagem;
     int totalVotantes = 0;
     int sair = 1;
 
@@ -363,10 +363,10 @@ int apuraPercentualVotos(){
 	        apuraPercentualPorCargo('D');
 
 	    }else{
-	    	printf("As eleicoes ainda nao iniciaram!");
+	    	printf("               As eleicoes ainda nao iniciaram! \n\n");
 		}
 
-	    printf("\n 0 - Sair \n ");
+	    printf("\n 0 - Sair: ");
 	    scanf("%d", &sair);
 	    	if(sair == 0){
 	           system("cls");
@@ -381,12 +381,11 @@ int quantidadeEleitosPorPartido(){
 	int xyz = 0;
 	int def = 0;
 	int i;
+
 	int presidenteEleito = 0;
 	int deputadosEleitos = 1;
-	int numDeputadosEleitos = 0;
-    struct candidato presidente;
-    struct candidato deputados[1];
     struct candidato eleitos[2];
+
     int sair = 1;
 
 	while(sair != 0 ){
@@ -405,13 +404,13 @@ int quantidadeEleitosPorPartido(){
 		}
 
 		for(i = 0 ; i < 3 ; i ++){
-			if(strcmp(eleitos[i].partido, "ABC")==0){
+			if(strcmp(eleitos[i].partido, "ABC")==0 && eleitos[i].numVotos > 0){
 				abc ++;
 			}else{
-				if(strcmp(eleitos[i].partido, "XYZ")==0){
+				if(strcmp(eleitos[i].partido, "XYZ")==0 && eleitos[i].numVotos > 0){
 					xyz++;
 				}else{
-					if(strcmp(eleitos[i].partido, "DEF")==0){
+					if(strcmp(eleitos[i].partido, "DEF")==0 && eleitos[i].numVotos > 0){
 						def++;
 					}
 				}
@@ -423,7 +422,7 @@ int quantidadeEleitosPorPartido(){
 		printf(" XYZ                    %d \n", xyz);
 		printf(" DEF                    %d \n", def);
 
-	        printf("\n 0 - Sair \n ");
+	        printf("\n 0 - Sair: ");
 	        scanf("%d", &sair);
 	        if(sair == 0){
 	            system("cls");

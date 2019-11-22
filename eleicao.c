@@ -260,12 +260,20 @@ int totalVotosCandidato(){
 
     while(sair != 0 ){
     ordenaPorVotos();
-             printf("   N candidato          Nome           Partido         Cargo        Num de Votos\n\n");
+    printf("   N candidato          Nome           Partido         Cargo        Num de Votos\n\n\n");
+    printf("                  ------------- PRESIDENCIAVEIS------------- \n \n");
         for(i = 0; i < 11; i++){
-            printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%c\t\v\t%d\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);
-
+            if(lista[i].cargo == 'P'){
+                printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%c\t\v\t%d\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);
+            }
         }
-         printf("\n 0 - Sair \n ");
+    printf("     \n\n                     ------------- DEPUTADOS------------- \n \n");
+        for(i = 0; i < 11; i++){
+            if(lista[i].cargo == 'D'){
+                printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%c\t\v\t%d\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);
+            }
+        }
+         printf("\n 0 - Sair:  ");
         scanf("%d", &sair);
         if(sair == 0){
             system("cls");
@@ -279,11 +287,10 @@ int totalVotosCandidato(){
 int apuraPercentualPorCargo(char *cargoCand){
 	int i;
 	int totalVotantes = 0;
-	int sair = 1;
 
 	printf("        Nome           Partido         Cargo         %%Votos\n\n");
 
-    while(sair != 0 ){
+
 		for(i = 0 ; i < 11 ; i ++){
 			if(lista[i].cargo == cargoCand){
 				totalVotantes += lista[i].numVotos;
@@ -300,14 +307,6 @@ int apuraPercentualPorCargo(char *cargoCand){
 	           printf("\t%s\t\v\t%s\t\v\t%c\t\v\t%.2f\t\n",lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].porcentagemVotos);
 	        }
 	    }
-        printf("\n 0 - Sair \n ");
-        scanf("%d", &sair);
-        if(sair == 0){
-            system("cls");
-        }else{
-            printf("Digite 0 para retornar ao menu");
-        }
-    }
 	return 0;
 }
 int ordenaPorVotos (){

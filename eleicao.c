@@ -382,12 +382,12 @@ int quantidadeEleitosPorPartido(){
 	int abc = 0;
 	int xyz = 0;
 	int def = 0;
+	
 	int i;
 
 	int presidenteEleito = 0;
 	int deputadosEleitos = 1;
-    struct candidato eleitos[2];
-
+    struct candidato eleitos[3];
     int sair = 1;
 
 	while(sair != 0 ){
@@ -404,16 +404,19 @@ int quantidadeEleitosPorPartido(){
 	            }
 	        }
 		}
-
-		for(i = 0 ; i < 3 ; i ++){
-			if(strcmp(eleitos[i].partido, "ABC")==0 && eleitos[i].numVotos > 0){
-				abc ++;
-			}else{
-				if(strcmp(eleitos[i].partido, "XYZ")==0 && eleitos[i].numVotos > 0){
-					xyz++;
+		
+		if(deputadosEleitos == 3){
+		
+			for(i = 0 ; i < 3 ; i ++){
+				if(strcmp(eleitos[i].partido, "ABC")==0 && eleitos[i].numVotos > 0){
+					abc ++;
 				}else{
-					if(strcmp(eleitos[i].partido, "DEF")==0 && eleitos[i].numVotos > 0){
-						def++;
+					if(strcmp(eleitos[i].partido, "XYZ")==0 && eleitos[i].numVotos > 0){
+						xyz++;
+					}else{
+						if(strcmp(eleitos[i].partido, "DEF")==0 && eleitos[i].numVotos > 0){
+							def++;
+						}
 					}
 				}
 			}

@@ -261,14 +261,16 @@ int totalVotosCandidato(){
 
     while(sair != 0 ){
     ordenaPorVotos();
-    printf("   N candidato          Nome           Partido         Cargo        Num de Votos\n\n\n");
+
     printf("                  ------------- PRESIDENCIAVEIS------------- \n \n");
+    printf("   N candidato          Nome           Partido         Cargo        Num de Votos\n\n");
         for(i = 0; i < 11; i++){
             if(lista[i].cargo == 'P'){
                 printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%c\t\v\t%d\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);
             }
         }
     printf("     \n\n                     ------------- DEPUTADOS------------- \n \n");
+    printf("   N candidato          Nome           Partido         Cargo        Num de Votos\n\n");
         for(i = 0; i < 11; i++){
             if(lista[i].cargo == 'D'){
                 printf("\t%d\t\v\t%s\t\v\t%s\t\v\t%c\t\v\t%d\t\n", lista[i].numeroCandidato, lista[i].nome, lista[i].partido, lista[i].cargo, lista[i].numVotos);

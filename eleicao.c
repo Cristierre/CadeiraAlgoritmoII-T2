@@ -139,12 +139,12 @@ int votacao(){
     struct candidato presidenteEscolhido;
     struct candidato deputadoEscolhido;
     int i;
-    int confirma = 0;
+    int confirma = 2;
 
     presidenteEscolhido.numeroCandidato = 0;
     deputadoEscolhido.numeroCandidato = 0;
 
-    while(confirma == 0){
+    while(confirma == 2){
 
         printf("-------- VOTO PARA PRESIDENTE -------\n \n");
         printf("Digite o numero do candidato para presidencia: ");
@@ -194,6 +194,7 @@ int votacao(){
                 }
             }
         }else{
+        	system("cls");
             printf(" \n Voce deve votar em um deputado! \n\n");
         }
     }

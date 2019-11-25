@@ -136,16 +136,19 @@ int menu(){
 int votacao(){
     int paraPresidente;
     int paraDeputado;
+    int numVotosDeputadoAntes = 0;
+    int numVotosPresidenteAntes = 0;
     struct candidato presidenteEscolhido;
     struct candidato deputadoEscolhido;
     int i;
+    int votacaoValida;
     int confirma = 2;
 
     presidenteEscolhido.numeroCandidato = 0;
     deputadoEscolhido.numeroCandidato = 0;
 
     while(confirma == 2){
-
+		votacaoValida = 0;
         printf("-------- VOTO PARA PRESIDENTE -------\n \n");
         printf("Digite o numero do candidato para presidencia: ");
         scanf("%d", &paraPresidente);
@@ -157,11 +160,14 @@ int votacao(){
         for(i = 0; i < 11; i++){
             if(lista[i].numeroCandidato == paraPresidente && lista[i].numeroCandidato < 100){
                 presidenteEscolhido = lista[i];
+                numVotosPresidenteAntes = lista[i].numVotos;
             }
             if(lista[i].numeroCandidato == paraDeputado && lista[i].numeroCandidato > 1000){
                 deputadoEscolhido = lista[i];
+                numVotosDeputadoAntes = lista[i].numVotos;
             }
         }
+        
         if(presidenteEscolhido.numeroCandidato != 0){
             printf("--- PARA PRESIDENTE --- \n \n");
             printf("Nome: %s \n\n", presidenteEscolhido.nome);
@@ -169,34 +175,40 @@ int votacao(){
             printf("Cargo: %c \n\n", presidenteEscolhido.cargo);
 
         }else{
-            printf("\n Voce deve votar em um presidente! \n \n");
+        	votacaoValida = 1;
         }
-        if(deputadoEscolhido.numeroCandidato != 0){
+        if(deputadoEscolhido.numeroCandidato != 0 && votacaoValida != 1){
             printf("--- PARA DEPUTADO --- \n \n");
             printf("Nome: %s \n\n", deputadoEscolhido.nome);
             printf("Partido: %s \n\n", deputadoEscolhido.partido);
-            printf("Cargo: %c \n\n", deputadoEscolhido.cargo);
-
-            printf("1 - CONFIRMA    0- CANCELA :");
-            scanf("%d", &confirma);
-
-            if(confirma == 1){
-                    printf("\a");
-                for(i = 0; i < 11; i++){
-                    if(lista[i].numeroCandidato == paraDeputado){
-
-                        lista[i].numVotos += 1;
-
-                    }
-                    if(lista[i].numeroCandidato == paraPresidente){
-                        lista[i].numVotos += 1;
-                    }
-                }
-            }
+            printf("Cargo: %c \n\n", deputadoEscolhido.cargo);           
+            
         }else{
+        	votacaoValida = 1;
         	system("cls");
-            printf(" \n Voce deve votar em um deputado! \n\n");
+        	printf("Numero de candidatura invalido! \n");
         }
+        
+		printf("1 - CONFIRMA    0- CANCELA :");
+        scanf("%d", &confirma);
+        system("cls");
+        
+        if(confirma == 1 && votacaoValida == 0){
+        	for(i = 0; i < 11; i++){
+            	if(lista[i].numeroCandidato == paraPresidente && lista[i].numeroCandidato < 100){
+              	  lista[i].numVotos += 1;
+          	  	}
+            	if(lista[i].numeroCandidato == paraDeputado && lista[i].numeroCandidato > 1000){
+              	  lista[i].numVotos += 1;
+           	 	}
+        	}
+		}else{
+			if(confirma == 0){
+				confirma = 1;
+			}else{
+				confirma =2;				
+			}
+		}
     }
     system("cls");
     return 0;

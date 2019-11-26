@@ -148,10 +148,13 @@ int votacao(){
     deputadoEscolhido.numeroCandidato = 0;
 
     while(confirma == 2){
+
 		votacaoValida = 0;
+
         printf("-------- VOTO PARA PRESIDENTE -------\n \n");
         printf("Digite o numero do candidato para presidencia: ");
         scanf("%d", &paraPresidente);
+
         printf("\n\n-------- VOTO PARA DEPUTADO  ------- \n \n");
         printf("Digite o numero do candidato para deputado: ");
         scanf("%d", &paraDeputado);
@@ -167,32 +170,27 @@ int votacao(){
                 numVotosDeputadoAntes = lista[i].numVotos;
             }
         }
-        
-        if(presidenteEscolhido.numeroCandidato != 0){
+
+        if(presidenteEscolhido.numeroCandidato != 0 && deputadoEscolhido.numeroCandidato != 0){
             printf("--- PARA PRESIDENTE --- \n \n");
             printf("Nome: %s \n\n", presidenteEscolhido.nome);
             printf("Partido: %s \n\n", presidenteEscolhido.partido);
             printf("Cargo: %c \n\n", presidenteEscolhido.cargo);
 
-        }else{
-        	votacaoValida = 1;
-        }
-        if(deputadoEscolhido.numeroCandidato != 0 && votacaoValida != 1){
             printf("--- PARA DEPUTADO --- \n \n");
             printf("Nome: %s \n\n", deputadoEscolhido.nome);
             printf("Partido: %s \n\n", deputadoEscolhido.partido);
-            printf("Cargo: %c \n\n", deputadoEscolhido.cargo);           
-            
+            printf("Cargo: %c \n\n", deputadoEscolhido.cargo);
+
         }else{
+        	printf("                VOTACAO INVALIDA!!! \n\n");
         	votacaoValida = 1;
-        	system("cls");
-        	printf("Numero de candidatura invalido! \n");
         }
-        
+
 		printf("1 - CONFIRMA    0- CANCELA :");
         scanf("%d", &confirma);
         system("cls");
-        
+
         if(confirma == 1 && votacaoValida == 0){
         	for(i = 0; i < 11; i++){
             	if(lista[i].numeroCandidato == paraPresidente && lista[i].numeroCandidato < 100){
@@ -206,7 +204,7 @@ int votacao(){
 			if(confirma == 0){
 				confirma = 1;
 			}else{
-				confirma =2;				
+				confirma =2;
 			}
 		}
     }
@@ -395,7 +393,7 @@ int quantidadeEleitosPorPartido(){
 	int abc = 0;
 	int xyz = 0;
 	int def = 0;
-	
+
 	int i;
 
 	int presidenteEleito = 0;
@@ -417,9 +415,9 @@ int quantidadeEleitosPorPartido(){
 	            }
 	        }
 		}
-		
+
 		if(deputadosEleitos == 3){
-		
+
 			for(i = 0 ; i < 3 ; i ++){
 				if(strcmp(eleitos[i].partido, "ABC")==0 && eleitos[i].numVotos > 0){
 					abc ++;
